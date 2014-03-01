@@ -9,6 +9,7 @@
     ],
     "require": {
         "jbroadway/urlify": ">=1.0.0,<1.1.0",
+        "kriswallsmith/buzz": ">=v0.10",
         "zineinc/storage-common": "*"
     },
     "autoload": {

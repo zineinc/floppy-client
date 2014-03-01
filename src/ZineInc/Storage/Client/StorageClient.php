@@ -11,7 +11,7 @@ interface StorageClient
      *
      * @return \ZineInc\Storage\Common\AttributesBag attributes for uploaded file
      *
-     * @throws \Exception
+     * @throws IOException
      */
     public function upload(FileSource $fileSource);
 }
