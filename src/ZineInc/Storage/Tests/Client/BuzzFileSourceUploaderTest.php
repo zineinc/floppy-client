@@ -24,6 +24,9 @@ class BuzzFileSourceUploaderTest extends \PHPUnit_Framework_TestCase
     const FILEPATH = '/some/filepath/somename.jpg';
     const RESPONSE_CONTENT = 'abcdfasfasf';
 
+    const HOST = 'http://localhost';
+    const REQUEST_PATH = '/some/path';
+
     /**
      * @test
      */
@@ -33,7 +36,7 @@ class BuzzFileSourceUploaderTest extends \PHPUnit_Framework_TestCase
 
         $fileSource = $this->createFileSource();
         $client = new BuzzFileSourceUploaderTest_Client(self::RESPONSE_CONTENT, 200, array($this, 'assertRequest'));
-        $uploader = new BuzzFileSourceUploader($client, self::FILE_KEY);
+        $uploader = $this->createUploader($client);
 
         //when
 
@@ -43,6 +46,7 @@ class BuzzFileSourceUploaderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(self::RESPONSE_CONTENT, $response);
     }
+
 
     /**
      * @test
@@ -54,7 +58,7 @@ class BuzzFileSourceUploaderTest extends \PHPUnit_Framework_TestCase
 
         $fileSource = $this->createFileSource();
         $client = new BuzzFileSourceUploaderTest_Client(self::RESPONSE_CONTENT, 400, array($this, 'assertRequest'));
-        $uploader = new BuzzFileSourceUploader($client, self::FILE_KEY);
+        $uploader = $this->createUploader($client);
 
         //when
 
@@ -71,7 +75,7 @@ class BuzzFileSourceUploaderTest extends \PHPUnit_Framework_TestCase
 
         $fileSource = $this->createFileSource();
         $client = $this->getMock('Buzz\Client\ClientInterface');
-        $uploader = new BuzzFileSourceUploader($client, self::FILE_KEY);
+        $uploader = $this->createUploader($client);
 
         $client->expects($this->once())
             ->method('send')
@@ -85,13 +89,17 @@ class BuzzFileSourceUploaderTest extends \PHPUnit_Framework_TestCase
     public function assertRequest($request)
     {
         $this->assertInstanceOf('Buzz\Message\Form\FormRequest', $request);
+
+        $this->assertEquals(self::HOST, $request->getHost());
+        $this->assertEquals(self::REQUEST_PATH, $request->getResource());
+
         $fields = $request->getFields();
         $this->assertTrue(count($fields) > 0);
         $field = current($fields);
         $this->assertInstanceOf('Buzz\Message\Form\FormUpload', $field);
-        $this->assertEquals(BuzzFileSourceUploaderTest::FILE_KEY, $field->getName());
-        $this->assertEquals(basename(BuzzFileSourceUploaderTest::FILEPATH), $field->getFilename());
-        $this->assertEquals(basename(BuzzFileSourceUploaderTest::FILE_CONTENT), $field->getContent());
+        $this->assertEquals(self::FILE_KEY, $field->getName());
+        $this->assertEquals(basename(self::FILEPATH), $field->getFilename());
+        $this->assertEquals(basename(self::FILE_CONTENT), $field->getContent());
     }
 
     /**
@@ -100,6 +108,16 @@ class BuzzFileSourceUploaderTest extends \PHPUnit_Framework_TestCase
     private function createFileSource()
     {
         return new FileSource(new BuzzFileSourceUploaderTest_Stream(self::FILE_CONTENT, self::FILEPATH), new FileType('a/a', 'jpg'));
+    }
+
+    /**
+     * @param $client
+     *
+     * @return BuzzFileSourceUploader
+     */
+    private function createUploader($client)
+    {
+        return new BuzzFileSourceUploader($client, self::HOST, self::REQUEST_PATH, self::FILE_KEY);
     }
 }
 

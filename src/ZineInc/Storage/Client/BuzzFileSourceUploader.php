@@ -15,16 +15,20 @@ class BuzzFileSourceUploader implements FileSourceUploader
 {
     private $client;
     private $fileKey;
+    private $host;
+    private $path;
 
-    public function __construct(ClientInterface $client, $fileKey = 'file')
+    public function __construct(ClientInterface $client, $host, $path = '/upload', $fileKey = 'file')
     {
         $this->client = $client;
         $this->fileKey = $fileKey;
+        $this->host = $host;
+        $this->path = $path;
     }
 
     public function upload(FileSource $fileSource)
     {
-        $request = new FormRequest(FormRequest::METHOD_POST, '/', '');
+        $request = new FormRequest(FormRequest::METHOD_POST, $this->path, $this->host);
 
         $formUpload = new FormUpload();
         $formUpload->setName($this->fileKey);
