@@ -50,7 +50,7 @@ class BuzzFileSourceUploaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException ZineInc\Storage\Client\BadResponseException
+     * @expectedException ZineInc\Storage\Client\Exception\BadResponseException
      */
     public function fileSourceOk_successfullRequestSending_badStatusCode_throwException()
     {
@@ -67,7 +67,7 @@ class BuzzFileSourceUploaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException ZineInc\Storage\Client\IOException
+     * @expectedException ZineInc\Storage\Client\Exception\IOException
      */
     public function fileSourceOk_clientException_throwException()
     {

@@ -2,6 +2,7 @@
 
 namespace ZineInc\Storage\Client;
 
+use ZineInc\Storage\Client\Exception\BadResponseException;
 use ZineInc\Storage\Common\AttributesBag;
 use \ZineInc\Storage\Common\FileSource;
 

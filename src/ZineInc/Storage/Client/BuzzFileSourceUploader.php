@@ -9,6 +9,8 @@ use Buzz\Exception\RuntimeException;
 use Buzz\Message\Form\FormRequest;
 use Buzz\Message\Form\FormUpload;
 use Buzz\Message\Response;
+use ZineInc\Storage\Client\Exception\BadResponseException;
+use ZineInc\Storage\Client\Exception\IOException;
 use ZineInc\Storage\Common\FileSource;
 
 class BuzzFileSourceUploader implements FileSourceUploader

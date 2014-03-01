@@ -45,7 +45,7 @@ class StorageClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException ZineInc\Storage\Client\BadResponseException
+     * @expectedException ZineInc\Storage\Client\Exception\BadResponseException
      */
     public function malformedResponse_throwException()
     {
