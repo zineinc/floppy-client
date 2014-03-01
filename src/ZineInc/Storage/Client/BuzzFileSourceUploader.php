@@ -36,7 +36,7 @@ class BuzzFileSourceUploader implements FileSourceUploader
         $formUpload->setContent($fileSource->content());
 
         $request->addFields(array(
-            $formUpload
+            $this->fileKey => $formUpload,
         ));
 
         try

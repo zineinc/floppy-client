@@ -94,8 +94,8 @@ class BuzzFileSourceUploaderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(self::REQUEST_PATH, $request->getResource());
 
         $fields = $request->getFields();
-        $this->assertTrue(count($fields) > 0);
-        $field = current($fields);
+        $this->assertTrue(isset($fields[self::FILE_KEY]));
+        $field = $fields[self::FILE_KEY];
         $this->assertInstanceOf('Buzz\Message\Form\FormUpload', $field);
         $this->assertEquals(self::FILE_KEY, $field->getName());
         $this->assertEquals(basename(self::FILEPATH), $field->getFilename());
