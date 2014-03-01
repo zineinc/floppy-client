@@ -10,7 +10,8 @@
     "require": {
         "jbroadway/urlify": ">=1.0.0,<1.1.0",
         "kriswallsmith/buzz": ">=v0.10",
-        "zineinc/storage-common": "*"
+        "zineinc/storage-common": "*",
+        "pimple/pimple": "2.0.*"
     },
     "autoload": {
     	"psr-0": { "ZineInc\\Storage\\": "src/" }
