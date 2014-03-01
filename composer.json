@@ -1,0 +1,34 @@
+{
+    "name": "zineinc/storage-client",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "psliwa",
+            "email": "piotr.sliwa@zineinc.com"
+        }
+    ],
+    "require": {
+        "jbroadway/urlify": ">=1.0.0,<1.1.0",
+        "zineinc/storage-common": "*"
+    },
+    "autoload": {
+    	"psr-0": { "ZineInc\\Storage\\": "src/" }
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "zineinc/storage-common",
+                "version": "0.0.4",
+                "source": {
+                    "url": "git@codebasehq.com:advisio/zineinc/storage-common.git",
+                    "type": "git",
+                    "reference": "master"
+                },
+                "autoload": {
+                    "psr-0": { "ZineInc\\Storage\\": "src/" }
+                }
+            }
+        }
+    ]
+}
