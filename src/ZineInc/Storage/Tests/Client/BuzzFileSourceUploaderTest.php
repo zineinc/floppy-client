@@ -11,6 +11,7 @@ use Buzz\Message\Request;
 use Buzz\Message\RequestInterface;
 use Buzz\Message\Response;
 use ZineInc\Storage\Client\BuzzFileSourceUploader;
+use ZineInc\Storage\Client\Url;
 use ZineInc\Storage\Common\FileSource;
 use ZineInc\Storage\Common\FileType;
 use ZineInc\Storage\Common\Stream\InputStream;
@@ -24,7 +25,8 @@ class BuzzFileSourceUploaderTest extends \PHPUnit_Framework_TestCase
     const FILEPATH = '/some/filepath/somename.jpg';
     const RESPONSE_CONTENT = 'abcdfasfasf';
 
-    const HOST = 'http://localhost';
+    const PROTOCOL = 'http';
+    const HOST = 'localhost';
     const REQUEST_PATH = '/some/path';
 
     /**
@@ -90,7 +92,7 @@ class BuzzFileSourceUploaderTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('Buzz\Message\Form\FormRequest', $request);
 
-        $this->assertEquals(self::HOST, $request->getHost());
+        $this->assertEquals(self::PROTOCOL.'://'.self::HOST, $request->getHost());
         $this->assertEquals(self::REQUEST_PATH, $request->getResource());
 
         $fields = $request->getFields();
@@ -117,7 +119,7 @@ class BuzzFileSourceUploaderTest extends \PHPUnit_Framework_TestCase
      */
     private function createUploader($client)
     {
-        return new BuzzFileSourceUploader($client, self::HOST, self::REQUEST_PATH, self::FILE_KEY);
+        return new BuzzFileSourceUploader($client, new Url(self::HOST, self::REQUEST_PATH, self::PROTOCOL), self::FILE_KEY);
     }
 }
 

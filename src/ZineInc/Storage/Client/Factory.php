@@ -27,7 +27,7 @@ class Factory
             return new UrlGeneratorImpl(array(
                 'image' => $container['urlGenerator.image'],
                 'file' => $container['urlGenerator.file'],
-            ), $container['host'], $container['path'], $container['protocol'], $container['urlGenerator.hostResolver']);
+            ), new Url($container['host'], $container['path'], $container['protocol']), $container['urlGenerator.hostResolver']);
         };
 
         $container['urlGenerator.image'] = function($container){
@@ -63,7 +63,7 @@ class Factory
             return new StorageClient($container['storageClient.uploader']);
         };
         $container['storageClient.uploader'] = function($container){
-            return new BuzzFileSourceUploader($container['storageClient.uploader.buzz'], $container['protocol'].'://'.$container['host'], $container['path'].'/upload', $container['storageClient.uploader.fileKey']);
+            return new BuzzFileSourceUploader($container['storageClient.uploader.buzz'], new Url($container['host'], $container['path'].'/upload', $container['protocol']), $container['storageClient.uploader.fileKey']);
         };
         $container['storageClient.uploader.fileKey'] = 'file';
         $container['protocol'] = 'http';

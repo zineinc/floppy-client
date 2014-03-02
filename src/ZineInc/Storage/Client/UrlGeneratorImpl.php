@@ -9,18 +9,14 @@ use ZineInc\Storage\Common\FileId;
 class UrlGeneratorImpl implements UrlGenerator
 {
     private $pathGenerators;
-    private $protocol;
-    private $path;
     private $hostResolver;
-    private $host;
+    private $endpointUrl;
 
-    public function __construct(array $pathGenerators, $host, $path, $protocol, HostResolver $hostResolver)
+    public function __construct(array $pathGenerators, Url $endpointUrl, HostResolver $hostResolver)
     {
         $this->pathGenerators = $pathGenerators;
-        $this->host = $host;
-        $this->path = $path;
-        $this->protocol = $protocol;
         $this->hostResolver = $hostResolver;
+        $this->endpointUrl = $endpointUrl;
     }
 
 
@@ -34,11 +30,13 @@ class UrlGeneratorImpl implements UrlGenerator
 
         $path = $pathGenerator->generate($fileId);
 
-        return sprintf('%s://%s%s/%s', $this->protocol, $this->host($fileId, $fileType), $this->path, $path);
+        return (string) $this->endpointUrl
+            ->replaceHost($this->host($fileId, $fileType))
+            ->replacePath($this->endpointUrl->path().'/'.$path);
     }
 
     private function host(FileId $fileId, $fileType)
     {
-        return $this->hostResolver->resolveHost($this->host, $fileId, $fileType);
+        return $this->hostResolver->resolveHost($this->endpointUrl->host(), $fileId, $fileType);
     }
 }

@@ -5,6 +5,7 @@ namespace ZineInc\Storage\Tests\Client;
 
 
 use ZineInc\Storage\Client\HostResolver;
+use ZineInc\Storage\Client\Url;
 use ZineInc\Storage\Client\UrlGeneratorImpl;
 use ZineInc\Storage\Common\FileId;
 
@@ -26,7 +27,7 @@ class UrlGeneratorImplTest extends \PHPUnit_Framework_TestCase
 
         $this->generator = new UrlGeneratorImpl(array(
             self::VALID_FILE_TYPE => $this->pathGenerator,
-        ), self::HOST, self::PATH, self::PROTOCOL, new UrlGeneratorImplTest_HostResolver(self::SUBDOMAIN));
+        ), new Url(self::HOST, self::PATH, self::PROTOCOL), new UrlGeneratorImplTest_HostResolver(self::SUBDOMAIN));
     }
 
     /**
