@@ -60,6 +60,14 @@ class Url
     /**
      * @return Url
      */
+    public function appendPath($path)
+    {
+        return new self($this->host, $this->path.$path, $this->protocol);
+    }
+
+    /**
+     * @return Url
+     */
     public function replaceProtocol($protocol)
     {
         return new self($this->host, $this->path, $protocol);
