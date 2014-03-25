@@ -1,10 +1,10 @@
 <?php
 
 
-namespace ZineInc\Storage\Tests\Client;
+namespace Floppy\Tests\Client;
 
 
-use ZineInc\Storage\Client\Factory;
+use Floppy\Client\Factory;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {

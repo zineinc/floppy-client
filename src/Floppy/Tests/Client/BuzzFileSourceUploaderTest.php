@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ZineInc\Storage\Tests\Client;
+namespace Floppy\Tests\Client;
 
 
 use Buzz\Client\ClientInterface;
@@ -10,12 +10,12 @@ use Buzz\Message\MessageInterface;
 use Buzz\Message\Request;
 use Buzz\Message\RequestInterface;
 use Buzz\Message\Response;
-use ZineInc\Storage\Client\BuzzFileSourceUploader;
-use ZineInc\Storage\Client\Url;
-use ZineInc\Storage\Common\FileSource;
-use ZineInc\Storage\Common\FileType;
-use ZineInc\Storage\Common\Stream\InputStream;
-use ZineInc\Storage\Common\Stream\IOException;
+use Floppy\Client\BuzzFileSourceUploader;
+use Floppy\Client\Url;
+use Floppy\Common\FileSource;
+use Floppy\Common\FileType;
+use Floppy\Common\Stream\InputStream;
+use Floppy\Common\Stream\IOException;
 
 class BuzzFileSourceUploaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -52,7 +52,7 @@ class BuzzFileSourceUploaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException ZineInc\Storage\Client\Exception\BadResponseException
+     * @expectedException Floppy\Client\Exception\BadResponseException
      */
     public function fileSourceOk_successfullRequestSending_badStatusCode_throwException()
     {
@@ -69,7 +69,7 @@ class BuzzFileSourceUploaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException ZineInc\Storage\Client\Exception\IOException
+     * @expectedException Floppy\Client\Exception\IOException
      */
     public function fileSourceOk_clientException_throwException()
     {

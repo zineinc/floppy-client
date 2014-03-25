@@ -1,11 +1,11 @@
 <?php
 
 
-namespace ZineInc\Storage\Tests\Client;
+namespace Floppy\Tests\Client;
 
 
-use ZineInc\Storage\Client\SubdomainRotationHostResolver;
-use ZineInc\Storage\Common\FileId;
+use Floppy\Client\SubdomainRotationHostResolver;
+use Floppy\Common\FileId;
 
 class SubdomainRotationHostResolverTest extends \PHPUnit_Framework_TestCase
 {

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ZineInc\Storage\Client;
+namespace Floppy\Client;
 
 
 class Url

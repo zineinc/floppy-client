@@ -3,8 +3,23 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3d26451f2cc182affebaeb4d7c253945",
+    "hash": "0cc3e7626de3f9fa097ac35699a707c9",
     "packages": [
+        {
+            "name": "floppy/common",
+            "version": "0.0.4",
+            "source": {
+                "type": "git",
+                "url": "git@codebasehq.com:advisio/zineinc/storage-common.git",
+                "reference": "rebranding"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Floppy\\": "src/"
+                }
+            }
+        },
         {
             "name": "jbroadway/urlify",
             "version": "1.0.2-stable",

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace ZineInc\Storage\Client;
+namespace Floppy\Client;
 
-use ZineInc\Storage\Client\Exception\InvalidArgumentException;
-use ZineInc\Storage\Common\FileId;
+use Floppy\Client\Exception\InvalidArgumentException;
+use Floppy\Common\FileId;
 
 class UrlGeneratorImpl implements UrlGenerator
 {

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ZineInc\Storage\Client\Exception;
+namespace Floppy\Client\Exception;
 
 
 class IOException extends \Exception implements ClientException

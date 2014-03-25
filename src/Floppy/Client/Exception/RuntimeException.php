@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ZineInc\Storage\Client\Exception;
+namespace Floppy\Client\Exception;
 
 
 class RuntimeException extends \RuntimeException implements ClientException

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ZineInc\Storage\Client;
+namespace Floppy\Client;
 
 use Buzz\Client\ClientInterface;
 use Buzz\Exception\ClientException;
@@ -9,9 +9,9 @@ use Buzz\Exception\RuntimeException;
 use Buzz\Message\Form\FormRequest;
 use Buzz\Message\Form\FormUpload;
 use Buzz\Message\Response;
-use ZineInc\Storage\Client\Exception\BadResponseException;
-use ZineInc\Storage\Client\Exception\IOException;
-use ZineInc\Storage\Common\FileSource;
+use Floppy\Client\Exception\BadResponseException;
+use Floppy\Client\Exception\IOException;
+use Floppy\Common\FileSource;
 
 class BuzzFileSourceUploader implements FileSourceUploader
 {

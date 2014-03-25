@@ -1,10 +1,10 @@
 <?php
 
 
-namespace ZineInc\Storage\Client;
+namespace Floppy\Client;
 
 
-use ZineInc\Storage\Common\FileSource;
+use Floppy\Common\FileSource;
 
 interface FileSourceUploader
 {

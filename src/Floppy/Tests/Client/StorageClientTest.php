@@ -1,14 +1,14 @@
 <?php
 
 
-namespace ZineInc\Storage\Tests\Client;
+namespace Floppy\Tests\Client;
 
 
-use ZineInc\Storage\Client\StorageClient;
-use ZineInc\Storage\Common\AttributesBag;
-use ZineInc\Storage\Common\FileSource;
-use ZineInc\Storage\Common\FileType;
-use ZineInc\Storage\Common\Stream\StringInputStream;
+use Floppy\Client\StorageClient;
+use Floppy\Common\AttributesBag;
+use Floppy\Common\FileSource;
+use Floppy\Common\FileType;
+use Floppy\Common\Stream\StringInputStream;
 
 class StorageClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,7 +17,7 @@ class StorageClientTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->uploader = $this->getMock('ZineInc\Storage\Client\FileSourceUploader');
+        $this->uploader = $this->getMock('Floppy\Client\FileSourceUploader');
         $this->storageClient = new StorageClient($this->uploader);
     }
 
@@ -45,7 +45,7 @@ class StorageClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException ZineInc\Storage\Client\Exception\BadResponseException
+     * @expectedException Floppy\Client\Exception\BadResponseException
      */
     public function malformedResponse_throwException()
     {

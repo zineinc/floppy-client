@@ -1,10 +1,10 @@
 <?php
 
-namespace ZineInc\Storage\Client;
+namespace Floppy\Client;
 
-use ZineInc\Storage\Client\Exception\BadResponseException;
-use ZineInc\Storage\Common\AttributesBag;
-use \ZineInc\Storage\Common\FileSource;
+use Floppy\Client\Exception\BadResponseException;
+use Floppy\Common\AttributesBag;
+use \Floppy\Common\FileSource;
 
 class StorageClient
 {
@@ -18,7 +18,7 @@ class StorageClient
     /**
      * @param FileSource $fileSource File source to upload
      *
-     * @return \ZineInc\Storage\Common\AttributesBag attributes for uploaded file
+     * @return \Floppy\Common\AttributesBag attributes for uploaded file
      *
      * @throws IOException
      */

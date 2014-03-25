@@ -1,13 +1,13 @@
 <?php
 
 
-namespace ZineInc\Storage\Tests\Client;
+namespace Floppy\Tests\Client;
 
 
-use ZineInc\Storage\Client\HostResolver;
-use ZineInc\Storage\Client\Url;
-use ZineInc\Storage\Client\UrlGeneratorImpl;
-use ZineInc\Storage\Common\FileId;
+use Floppy\Client\HostResolver;
+use Floppy\Client\Url;
+use Floppy\Client\UrlGeneratorImpl;
+use Floppy\Common\FileId;
 
 class UrlGeneratorImplTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,7 +23,7 @@ class UrlGeneratorImplTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->pathGenerator = $this->getMock('ZineInc\Storage\Common\FileHandler\PathGenerator');
+        $this->pathGenerator = $this->getMock('Floppy\Common\FileHandler\PathGenerator');
 
         $this->generator = new UrlGeneratorImpl(array(
             self::VALID_FILE_TYPE => $this->pathGenerator,
@@ -57,7 +57,7 @@ class UrlGeneratorImplTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException ZineInc\Storage\Client\Exception\InvalidArgumentException
+     * @expectedException Floppy\Client\Exception\InvalidArgumentException
      */
     public function fileTypeDoesntExist_throwInvalidArgEx()
     {

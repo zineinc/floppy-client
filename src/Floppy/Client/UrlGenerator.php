@@ -1,9 +1,9 @@
 <?php
 
 
-namespace ZineInc\Storage\Client;
+namespace Floppy\Client;
 
-use ZineInc\Storage\Common\FileId;
+use Floppy\Common\FileId;
 
 interface UrlGenerator
 {

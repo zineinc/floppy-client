@@ -1,14 +1,14 @@
 <?php
 
 
-namespace ZineInc\Storage\Client;
+namespace Floppy\Client;
 
 
 use Buzz\Client\Curl;
-use ZineInc\Storage\Common\ChecksumCheckerImpl;
-use ZineInc\Storage\Common\FileHandler\FilePathGenerator;
-use ZineInc\Storage\Common\FileHandler\ImagePathGenerator;
-use ZineInc\Storage\Common\Storage\FilepathChoosingStrategyImpl;
+use Floppy\Common\ChecksumCheckerImpl;
+use Floppy\Common\FileHandler\FilePathGenerator;
+use Floppy\Common\FileHandler\ImagePathGenerator;
+use Floppy\Common\Storage\FilepathChoosingStrategyImpl;
 
 class Factory
 {
