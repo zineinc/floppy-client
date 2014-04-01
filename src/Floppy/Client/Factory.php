@@ -55,26 +55,26 @@ class Factory
         return $container['urlGenerator'];
     }
 
-    public function createStorageClient(array $options = array())
+    public function createFloppyClient(array $options = array())
     {
         $container = new \Pimple();
 
-        $container['storageClient'] = function($container){
-            return new StorageClient($container['storageClient.uploader']);
+        $container['floppy'] = function($container){
+            return new FloppyClient($container['floppy.uploader']);
         };
-        $container['storageClient.uploader'] = function($container){
-            return new BuzzFileSourceUploader($container['storageClient.uploader.buzz'], new Url($container['host'], $container['path'].'/upload', $container['protocol']), $container['storageClient.uploader.fileKey']);
+        $container['floppy.uploader'] = function($container){
+            return new BuzzFileSourceUploader($container['floppy.uploader.buzz'], new Url($container['host'], $container['path'].'/upload', $container['protocol']), $container['floppy.uploader.fileKey']);
         };
-        $container['storageClient.uploader.fileKey'] = 'file';
+        $container['floppy.uploader.fileKey'] = 'file';
         $container['protocol'] = 'http';
         $container['path'] = '';
-        $container['storageClient.uploader.buzz'] = function($container){
+        $container['floppy.uploader.buzz'] = function($container){
             return new Curl();
         };
 
         $this->mergeContainer($container, $options);
 
-        return $container['storageClient'];
+        return $container['floppy'];
     }
 
     private function mergeContainer(\Pimple $container, array $options)

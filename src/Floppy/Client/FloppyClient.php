@@ -7,7 +7,7 @@ use Floppy\Common\AttributesBag;
 use Floppy\Common\FileId;
 use \Floppy\Common\FileSource;
 
-class StorageClient
+class FloppyClient
 {
     private $uploader;
 

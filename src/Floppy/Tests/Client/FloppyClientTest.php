@@ -4,14 +4,14 @@
 namespace Floppy\Tests\Client;
 
 
-use Floppy\Client\StorageClient;
+use Floppy\Client\FloppyClient;
 use Floppy\Common\AttributesBag;
 use Floppy\Common\FileId;
 use Floppy\Common\FileSource;
 use Floppy\Common\FileType;
 use Floppy\Common\Stream\StringInputStream;
 
-class StorageClientTest extends \PHPUnit_Framework_TestCase
+class FloppyClientTest extends \PHPUnit_Framework_TestCase
 {
     private $storageClient;
     private $uploader;
@@ -19,7 +19,7 @@ class StorageClientTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->uploader = $this->getMock('Floppy\Client\FileSourceUploader');
-        $this->storageClient = new StorageClient($this->uploader);
+        $this->storageClient = new FloppyClient($this->uploader);
     }
 
     /**

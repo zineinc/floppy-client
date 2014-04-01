@@ -21,7 +21,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         //when
 
         $generator = $factory->createUrlGenerator();
-        $client = $factory->createStorageClient();
+        $client = $factory->createFloppyClient();
 
         //then
 
@@ -41,7 +41,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         //when
 
         $generator = $factory->createUrlGenerator(array('host' => 'host.com', 'secretKey' => 'abc'));
-        $client = $factory->createStorageClient(array('host' => 'host.com'));
+        $client = $factory->createFloppyClient(array('host' => 'host.com'));
 
         //then
 
@@ -76,7 +76,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
         //when
 
-        $factory->createStorageClient();
+        $factory->createFloppyClient();
     }
 }
  
