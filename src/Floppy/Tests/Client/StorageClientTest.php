@@ -6,6 +6,7 @@ namespace Floppy\Tests\Client;
 
 use Floppy\Client\StorageClient;
 use Floppy\Common\AttributesBag;
+use Floppy\Common\FileId;
 use Floppy\Common\FileSource;
 use Floppy\Common\FileType;
 use Floppy\Common\Stream\StringInputStream;
@@ -29,18 +30,18 @@ class StorageClientTest extends \PHPUnit_Framework_TestCase
         //given
 
         $fileSource = $this->createFileSource();
-        $expectedAttributes = array('some' => 'value');
+        $expectedAttributes = array('some' => 'value', 'id' => 'someid');
         $response = json_encode(array('code' => 200, 'attributes' => $expectedAttributes));
         $this->expectsUpload($fileSource, $response);
 
         //when
 
-        $attrs = $this->storageClient->upload($fileSource);
+        $fileId = $this->storageClient->upload($fileSource);
 
         //then
 
         $this->verifyMockObjects();
-        $this->assertEquals(new AttributesBag($expectedAttributes), $attrs);
+        $this->assertEquals(new FileId($expectedAttributes['id'], $expectedAttributes), $fileId);
     }
 
     /**

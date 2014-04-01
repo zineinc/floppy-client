@@ -4,6 +4,7 @@ namespace Floppy\Client;
 
 use Floppy\Client\Exception\BadResponseException;
 use Floppy\Common\AttributesBag;
+use Floppy\Common\FileId;
 use \Floppy\Common\FileSource;
 
 class StorageClient
@@ -18,9 +19,9 @@ class StorageClient
     /**
      * @param FileSource $fileSource File source to upload
      *
-     * @return \Floppy\Common\AttributesBag attributes for uploaded file
+     * @return \Floppy\Common\FileId uploaded file id
      *
-     * @throws IOException
+     * @throws Exception\IOException
      */
     public function upload(FileSource $fileSource)
     {
@@ -33,6 +34,6 @@ class StorageClient
             throw new BadResponseException('expecting json response with attributes property, actual response: '.$response);
         }
 
-        return new AttributesBag((array) $res['attributes']);
+        return new FileId(isset($res['attributes']['id']) ? $res['attributes']['id'] : null, (array) $res['attributes']);
     }
 }
