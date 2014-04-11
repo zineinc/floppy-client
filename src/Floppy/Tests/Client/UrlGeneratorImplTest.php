@@ -5,6 +5,7 @@ namespace Floppy\Tests\Client;
 
 
 use Floppy\Client\HostResolver;
+use Floppy\Client\Security\CredentialsGenerator;
 use Floppy\Client\Url;
 use Floppy\Client\UrlGeneratorImpl;
 use Floppy\Common\FileId;
@@ -20,20 +21,27 @@ class UrlGeneratorImplTest extends \PHPUnit_Framework_TestCase
 
     private $generator;
     private $pathGenerator;
+    private $credentialsGenerator;
+
+    private $generatedCredentials = array(
+        'credentials' => 'some value',
+    );
 
     protected function setUp()
     {
         $this->pathGenerator = $this->getMock('Floppy\Common\FileHandler\PathGenerator');
+        $this->credentialsGenerator = new UrlGeneratorImplTest_CredentialsGenerator($this->generatedCredentials);
 
         $this->generator = new UrlGeneratorImpl(array(
             self::VALID_FILE_TYPE => $this->pathGenerator,
-        ), new Url(self::HOST, self::PATH, self::PROTOCOL), new UrlGeneratorImplTest_HostResolver(self::SUBDOMAIN));
+        ), new Url(self::HOST, self::PATH, self::PROTOCOL), new UrlGeneratorImplTest_HostResolver(self::SUBDOMAIN), $this->credentialsGenerator);
     }
 
     /**
      * @test
+     * @dataProvider credentialsProvider
      */
-    public function testUrlGeneration()
+    public function testUrlGeneration($providedCredentials)
     {
         //given
 
@@ -46,13 +54,23 @@ class UrlGeneratorImplTest extends \PHPUnit_Framework_TestCase
 
         //when
 
-        $url = $this->generator->generate($fileId, self::VALID_FILE_TYPE);
+        $url = $this->generator->generate($fileId, self::VALID_FILE_TYPE, $providedCredentials);
 
         //then
 
         $this->verifyMockObjects();
-        $expectedUrl = self::PROTOCOL.'://'.self::SUBDOMAIN.'.'.self::HOST.self::PATH.'/'.$path;
+        $expectedUrl = self::PROTOCOL.'://'.self::SUBDOMAIN.'.'.self::HOST.self::PATH.'/'.$path.($providedCredentials ? '?'.http_build_query($this->generatedCredentials) : '');
         $this->assertEquals($expectedUrl, $url);
+    }
+
+    public function credentialsProvider()
+    {
+        return array(
+            array(null),
+            array(
+                array('some' => 'value'),
+            ),
+        );
     }
 
     /**
@@ -85,5 +103,20 @@ class UrlGeneratorImplTest_HostResolver implements HostResolver
     public function resolveHost($host, FileId $fileId, $fileType)
     {
         return $this->subdomain.'.'.$host;
+    }
+}
+
+class UrlGeneratorImplTest_CredentialsGenerator implements CredentialsGenerator
+{
+    private $generatedCredentials;
+
+    public function __construct($generatedCredentials)
+    {
+        $this->generatedCredentials = $generatedCredentials;
+    }
+
+    public function generateCredentials(array $credentials)
+    {
+        return $this->generatedCredentials;
     }
 }

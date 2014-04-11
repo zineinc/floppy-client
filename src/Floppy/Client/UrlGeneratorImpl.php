@@ -4,6 +4,7 @@
 namespace Floppy\Client;
 
 use Floppy\Client\Exception\InvalidArgumentException;
+use Floppy\Client\Security\CredentialsGenerator;
 use Floppy\Common\FileId;
 
 class UrlGeneratorImpl implements UrlGenerator
@@ -11,16 +12,18 @@ class UrlGeneratorImpl implements UrlGenerator
     private $pathGenerators;
     private $hostResolver;
     private $endpointUrl;
+    private $credentialsGenerator;
 
-    public function __construct(array $pathGenerators, Url $endpointUrl, HostResolver $hostResolver)
+    public function __construct(array $pathGenerators, Url $endpointUrl, HostResolver $hostResolver, CredentialsGenerator $credentialsGenerator)
     {
         $this->pathGenerators = $pathGenerators;
         $this->hostResolver = $hostResolver;
         $this->endpointUrl = $endpointUrl;
+        $this->credentialsGenerator = $credentialsGenerator;
     }
 
 
-    public function generate(FileId $fileId, $fileType)
+    public function generate(FileId $fileId, $fileType, array $credentials = null)
     {
         if(!isset($this->pathGenerators[$fileType])) {
             throw new InvalidArgumentException(sprintf('File type "%s" doesn\'t exist, supported file types: %s', $fileType, implode(', ', array_keys($this->pathGenerators))));
@@ -30,9 +33,17 @@ class UrlGeneratorImpl implements UrlGenerator
 
         $path = $pathGenerator->generate($fileId);
 
-        return (string) $this->endpointUrl
+        $url = (string) $this->endpointUrl
             ->replaceHost($this->host($fileId, $fileType))
             ->replacePath($this->endpointUrl->path().'/'.$path);
+
+        if($credentials !== null) {
+            $credentials['url'] = $url;
+            $qs = '?'.http_build_query($this->credentialsGenerator->generateCredentials($credentials));
+            $url .= $qs;
+        }
+
+        return $url;
     }
 
     private function host(FileId $fileId, $fileType)

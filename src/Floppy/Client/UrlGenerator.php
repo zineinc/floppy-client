@@ -7,5 +7,5 @@ use Floppy\Common\FileId;
 
 interface UrlGenerator
 {
-    public function generate(FileId $fileId, $fileType);
+    public function generate(FileId $fileId, $fileType, array $credentials = null);
 } 
