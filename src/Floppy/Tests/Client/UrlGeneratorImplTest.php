@@ -30,7 +30,7 @@ class UrlGeneratorImplTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->pathGenerator = $this->getMock('Floppy\Common\FileHandler\PathGenerator');
-        $this->credentialsGenerator = new UrlGeneratorImplTest_CredentialsGenerator($this->generatedCredentials);
+        $this->credentialsGenerator = new Stub\FakeCredentialsGenerator($this->generatedCredentials);
 
         $this->generator = new UrlGeneratorImpl(array(
             self::VALID_FILE_TYPE => $this->pathGenerator,
@@ -103,20 +103,5 @@ class UrlGeneratorImplTest_HostResolver implements HostResolver
     public function resolveHost($host, FileId $fileId, $fileType)
     {
         return $this->subdomain.'.'.$host;
-    }
-}
-
-class UrlGeneratorImplTest_CredentialsGenerator implements CredentialsGenerator
-{
-    private $generatedCredentials;
-
-    public function __construct($generatedCredentials)
-    {
-        $this->generatedCredentials = $generatedCredentials;
-    }
-
-    public function generateCredentials(array $credentials)
-    {
-        return $this->generatedCredentials;
     }
 }

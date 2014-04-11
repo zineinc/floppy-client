@@ -38,7 +38,7 @@ class UrlGeneratorImpl implements UrlGenerator
             ->replacePath($this->endpointUrl->path().'/'.$path);
 
         if($credentials !== null) {
-            $credentials['url'] = $url;
+            $credentials['id'] = $fileId->id();
             $qs = '?'.http_build_query($this->credentialsGenerator->generateCredentials($credentials));
             $url .= $qs;
         }

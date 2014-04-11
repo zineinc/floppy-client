@@ -41,7 +41,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         //when
 
         $generator = $factory->createUrlGenerator(array('host' => 'host.com', 'secretKey' => 'abc'));
-        $client = $factory->createFloppyClient(array('host' => 'host.com'));
+        $client = $factory->createFloppyClient(array('host' => 'host.com', 'secretKey' => 'abc'));
 
         //then
 

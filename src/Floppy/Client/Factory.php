@@ -5,6 +5,7 @@ namespace Floppy\Client;
 
 
 use Buzz\Client\Curl;
+use Floppy\Client\Security\PolicyGenerator;
 use Floppy\Common\ChecksumCheckerImpl;
 use Floppy\Common\FileHandler\FilePathGenerator;
 use Floppy\Common\FileHandler\ImagePathGenerator;
@@ -27,16 +28,19 @@ class Factory
             return new UrlGeneratorImpl(array(
                 'image' => $container['urlGenerator.image'],
                 'file' => $container['urlGenerator.file'],
-            ), new Url($container['host'], $container['path'], $container['protocol']), $container['urlGenerator.hostResolver']);
+            ), new Url($container['host'], $container['path'], $container['protocol']), $container['urlGenerator.hostResolver'], $container['credentialsGenerator']);
+        };
+
+        $container['credentialsGenerator'] = function($container){
+            return new PolicyGenerator($container['checksumChecker']);
         };
 
         $container['urlGenerator.image'] = function($container){
             return new ImagePathGenerator($container['checksumChecker'], $container['filepathChoosingStrategy']);
         };
-        $container['checksumChecker'] = function($container){
-            return new ChecksumCheckerImpl($container['secretKey'], $container['checksumChecker.length']);
-        };
-        $container['checksumChecker.length'] = 5;
+
+        $this->sharedDefinitions($container);
+
         $container['filepathChoosingStrategy'] = function ($container) {
             return new FilepathChoosingStrategyImpl();
         };
@@ -60,11 +64,17 @@ class Factory
         $container = new \Pimple();
 
         $container['floppy'] = function($container){
-            return new FloppyClient($container['floppy.uploader']);
+            return new FloppyClient($container['floppy.uploader'], $container['credentialsGenerator']);
         };
         $container['floppy.uploader'] = function($container){
             return new BuzzFileSourceUploader($container['floppy.uploader.buzz'], new Url($container['host'], $container['path'].'/upload', $container['protocol']), $container['floppy.uploader.fileKey']);
         };
+        $container['credentialsGenerator'] = function($container){
+            return new PolicyGenerator($container['checksumChecker']);
+        };
+
+        $this->sharedDefinitions($container);
+
         $container['floppy.uploader.fileKey'] = 'file';
         $container['protocol'] = 'http';
         $container['path'] = '';
@@ -84,5 +94,14 @@ class Factory
         foreach($options as $name => $value) {
             $container[$name] = $value;
         }
+    }
+
+    private function sharedDefinitions($container)
+    {
+        $container['checksumChecker'] = function ($container) {
+            return new ChecksumCheckerImpl($container['secretKey'], $container['checksumChecker.length']);
+        };
+        $container['checksumChecker.length'] = 5;
+        return $container;
     }
 } 
