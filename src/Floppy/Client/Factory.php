@@ -101,7 +101,7 @@ class Factory
         $container['checksumChecker'] = function ($container) {
             return new ChecksumCheckerImpl($container['secretKey'], $container['checksumChecker.length']);
         };
-        $container['checksumChecker.length'] = 5;
+        $container['checksumChecker.length'] = -1;
         return $container;
     }
 } 
