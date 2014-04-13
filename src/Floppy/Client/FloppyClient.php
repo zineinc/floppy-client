@@ -26,9 +26,9 @@ class FloppyClient
      *
      * @throws Exception\IOException
      */
-    public function upload(FileSource $fileSource, array $credentials = null)
+    public function upload(FileSource $fileSource, array $credentialAttributes = array())
     {
-        $extraFields = $credentials !== null ? $this->credentialsGenerator->generateCredentials($credentials) : null;
+        $extraFields = $this->credentialsGenerator->generateCredentials($credentialAttributes);
         $response = $this->uploader->upload($fileSource, $extraFields);
 
         $res = @json_decode($response, true);

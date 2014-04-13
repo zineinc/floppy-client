@@ -16,9 +16,13 @@ class PolicyGenerator implements CredentialsGenerator
     }
 
 
-    public function generateCredentials(array $credentials)
+    public function generateCredentials(array $credentialAttributes = array())
     {
-        $policy = base64_encode(json_encode($credentials));
+        if(!$credentialAttributes) {
+            return array();
+        }
+
+        $policy = base64_encode(json_encode($credentialAttributes));
         $checksum = $this->checksumChecker->generateChecksum($policy);
 
         return array(

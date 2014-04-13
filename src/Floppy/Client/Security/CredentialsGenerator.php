@@ -6,5 +6,5 @@ namespace Floppy\Client\Security;
 
 interface CredentialsGenerator
 {
-    public function generateCredentials(array $credentials);
-} 
+    public function generateCredentials(array $credentialAttributes = array());
+}

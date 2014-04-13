@@ -17,5 +17,5 @@ interface FileSourceUploader
      * @throws IOException When IO error occurs or bad response is received
      * @throws RuntimeException When no IO related error occurs
      */
-    public function upload(FileSource $fileSource, array $extraFields = null);
+    public function upload(FileSource $fileSource, array $extraFields = array());
 } 

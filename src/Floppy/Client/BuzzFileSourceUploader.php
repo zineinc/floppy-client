@@ -26,7 +26,7 @@ class BuzzFileSourceUploader implements FileSourceUploader
         $this->endpointUrl = $endpointUrl;
     }
 
-    public function upload(FileSource $fileSource, array $extraFields = null)
+    public function upload(FileSource $fileSource, array $extraFields = array())
     {
         $request = new FormRequest(FormRequest::METHOD_POST, $this->endpointUrl->path(), (string)$this->endpointUrl->replacePath(''));
 
@@ -35,7 +35,6 @@ class BuzzFileSourceUploader implements FileSourceUploader
         $formUpload->setFilename(basename($fileSource->filepath()));
         $formUpload->setContent($fileSource->content());
 
-        $extraFields = $extraFields ?: array();
         $request->addFields($extraFields + array(
             $this->fileKey => $formUpload,
         ));

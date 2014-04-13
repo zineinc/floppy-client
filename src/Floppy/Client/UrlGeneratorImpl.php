@@ -23,7 +23,7 @@ class UrlGeneratorImpl implements UrlGenerator
     }
 
 
-    public function generate(FileId $fileId, $fileType, array $credentials = null)
+    public function generate(FileId $fileId, $fileType, array $credentialAttributes = array())
     {
         if(!isset($this->pathGenerators[$fileType])) {
             throw new InvalidArgumentException(sprintf('File type "%s" doesn\'t exist, supported file types: %s', $fileType, implode(', ', array_keys($this->pathGenerators))));
@@ -37,9 +37,10 @@ class UrlGeneratorImpl implements UrlGenerator
             ->replaceHost($this->host($fileId, $fileType))
             ->replacePath($this->endpointUrl->path().'/'.$path);
 
-        if($credentials !== null) {
-            $credentials['id'] = $fileId->id();
-            $qs = '?'.http_build_query($this->credentialsGenerator->generateCredentials($credentials));
+        $credentialAttributes['id'] = $fileId->id();
+        $generatedCredentials = $this->credentialsGenerator->generateCredentials($credentialAttributes);
+        if($generatedCredentials) {
+            $qs = '?'.http_build_query($generatedCredentials);
             $url .= $qs;
         }
 

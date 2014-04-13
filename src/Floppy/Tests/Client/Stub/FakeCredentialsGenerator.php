@@ -12,8 +12,8 @@ class FakeCredentialsGenerator implements CredentialsGenerator
         $this->generatedCredentials = $generatedCredentials;
     }
 
-    public function generateCredentials(array $credentials)
+    public function generateCredentials(array $credentials = array())
     {
-        return $this->generatedCredentials;
+        return $credentials ? $this->generatedCredentials : array();
     }
 }

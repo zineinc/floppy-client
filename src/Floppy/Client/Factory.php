@@ -5,6 +5,7 @@ namespace Floppy\Client;
 
 
 use Buzz\Client\Curl;
+use Floppy\Client\Security\IgnoreIdCredentialsGenerator;
 use Floppy\Client\Security\PolicyGenerator;
 use Floppy\Common\ChecksumCheckerImpl;
 use Floppy\Common\FileHandler\FilePathGenerator;
@@ -32,7 +33,7 @@ class Factory
         };
 
         $container['credentialsGenerator'] = function($container){
-            return new PolicyGenerator($container['checksumChecker']);
+            return new IgnoreIdCredentialsGenerator(new PolicyGenerator($container['checksumChecker']));
         };
 
         $container['urlGenerator.image'] = function($container){

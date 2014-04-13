@@ -66,7 +66,6 @@ class UrlGeneratorImplTest extends \PHPUnit_Framework_TestCase
     public function credentialsProvider()
     {
         return array(
-            array(null),
             array(
                 array('some' => 'value'),
             ),

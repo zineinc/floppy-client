@@ -35,7 +35,7 @@ class FloppyClientTest extends \PHPUnit_Framework_TestCase
         $fileSource = $this->createFileSource();
         $expectedAttributes = array('some' => 'value', 'id' => 'someid');
         $response = json_encode(array('code' => 200, 'attributes' => $expectedAttributes));
-        $this->expectsUpload($fileSource, $response, $credentials ? $this->generatedCredentials : null);
+        $this->expectsUpload($fileSource, $response, $credentials ? $this->generatedCredentials : array());
 
         //when
 
@@ -50,7 +50,7 @@ class FloppyClientTest extends \PHPUnit_Framework_TestCase
     public function credentialsProvider()
     {
         return array(
-            array(null),
+            array(array()),
             array(
                 array('extra' => 'value'),
             ),
@@ -77,7 +77,7 @@ class FloppyClientTest extends \PHPUnit_Framework_TestCase
      * @param $fileSource
      * @param $response
      */
-    private function expectsUpload($fileSource, $response, array $extraFields = null)
+    private function expectsUpload($fileSource, $response, array $extraFields = array())
     {
         $this->uploader->expects($this->once())
             ->method('upload')
