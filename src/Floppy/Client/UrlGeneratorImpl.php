@@ -13,18 +13,22 @@ class UrlGeneratorImpl implements UrlGenerator
     private $hostResolver;
     private $endpointUrl;
     private $credentialsGenerator;
+    private $fileTypeGuesser;
 
-    public function __construct(array $pathGenerators, Url $endpointUrl, HostResolver $hostResolver, CredentialsGenerator $credentialsGenerator)
+    public function __construct(array $pathGenerators, Url $endpointUrl, HostResolver $hostResolver, CredentialsGenerator $credentialsGenerator, FileTypeGuesser $fileTypeGuesser)
     {
         $this->pathGenerators = $pathGenerators;
         $this->hostResolver = $hostResolver;
         $this->endpointUrl = $endpointUrl;
         $this->credentialsGenerator = $credentialsGenerator;
+        $this->fileTypeGuesser = $fileTypeGuesser;
     }
 
 
-    public function generate(FileId $fileId, $fileType, array $credentialAttributes = array())
+    public function generate(FileId $fileId, $fileType = null, array $credentialAttributes = array())
     {
+        $fileType = $fileType ?: $this->fileTypeGuesser->guessFileType($fileId);
+
         if(!isset($this->pathGenerators[$fileType])) {
             throw new InvalidArgumentException(sprintf('File type "%s" doesn\'t exist, supported file types: %s', $fileType, implode(', ', array_keys($this->pathGenerators))));
         }

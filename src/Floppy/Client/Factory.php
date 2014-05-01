@@ -29,7 +29,8 @@ class Factory
             return new UrlGeneratorImpl(array(
                 'image' => $container['urlGenerator.image'],
                 'file' => $container['urlGenerator.file'],
-            ), new Url($container['host'], $container['path'], $container['protocol']), $container['urlGenerator.hostResolver'], $container['credentialsGenerator']);
+            ), new Url($container['host'], $container['path'], $container['protocol']), $container['urlGenerator.hostResolver'], $container['credentialsGenerator'],
+            $container['urlGenerator.fileTypeGuesser']);
         };
 
         $container['credentialsGenerator'] = function($container){
@@ -38,6 +39,18 @@ class Factory
 
         $container['urlGenerator.image'] = function($container){
             return new ImagePathGenerator($container['checksumChecker'], $container['filepathChoosingStrategy']);
+        };
+
+        $container['urlGenerator.fileTypeGuesser'] = function($container){
+            return new FileTypeGuesser($container['urlGenerator.extensions']);
+        };
+
+        $container['urlGenerator.extensions'] = function($container){
+            return array('image' => $container['urlGenerator.image.extensions']);
+        };
+
+        $container['urlGenerator.image.extensions'] = function($container){
+            return array('png', 'jpeg', 'gif', 'jpg');
         };
 
         $this->sharedDefinitions($container);

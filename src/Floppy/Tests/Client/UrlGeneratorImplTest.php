@@ -4,6 +4,7 @@
 namespace Floppy\Tests\Client;
 
 
+use Floppy\Client\FileTypeGuesser;
 use Floppy\Client\HostResolver;
 use Floppy\Client\Security\CredentialsGenerator;
 use Floppy\Client\Url;
@@ -19,6 +20,8 @@ class UrlGeneratorImplTest extends \PHPUnit_Framework_TestCase
     const VALID_FILE_TYPE = 'file';
     const INVALID_FILE_TYPE = 'file2';
 
+    const IMPLICIT_FILE_EXTENSION = 'jpg';
+
     private $generator;
     private $pathGenerator;
     private $credentialsGenerator;
@@ -32,16 +35,20 @@ class UrlGeneratorImplTest extends \PHPUnit_Framework_TestCase
         $this->pathGenerator = $this->getMock('Floppy\Common\FileHandler\PathGenerator');
         $this->credentialsGenerator = new Stub\FakeCredentialsGenerator($this->generatedCredentials);
 
+        $fileTypeGuesser = new FileTypeGuesser(array(
+            self::VALID_FILE_TYPE => array(self::IMPLICIT_FILE_EXTENSION)
+        ));
+
         $this->generator = new UrlGeneratorImpl(array(
             self::VALID_FILE_TYPE => $this->pathGenerator,
-        ), new Url(self::HOST, self::PATH, self::PROTOCOL), new UrlGeneratorImplTest_HostResolver(self::SUBDOMAIN), $this->credentialsGenerator);
+        ), new Url(self::HOST, self::PATH, self::PROTOCOL), new UrlGeneratorImplTest_HostResolver(self::SUBDOMAIN), $this->credentialsGenerator, $fileTypeGuesser);
     }
 
     /**
      * @test
-     * @dataProvider credentialsProvider
+     * @dataProvider dataProvider
      */
-    public function testUrlGeneration($providedCredentials)
+    public function testUrlGeneration($providedCredentials, $fileType)
     {
         //given
 
@@ -54,7 +61,7 @@ class UrlGeneratorImplTest extends \PHPUnit_Framework_TestCase
 
         //when
 
-        $url = $this->generator->generate($fileId, self::VALID_FILE_TYPE, $providedCredentials);
+        $url = $this->generator->generate($fileId, $fileType, $providedCredentials);
 
         //then
 
@@ -63,12 +70,17 @@ class UrlGeneratorImplTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedUrl, $url);
     }
 
-    public function credentialsProvider()
+    public function dataProvider()
     {
         return array(
             array(
                 array('some' => 'value'),
+                self::VALID_FILE_TYPE,
             ),
+            array(
+                array('some' => 'value'),
+                null,
+            )
         );
     }
 
