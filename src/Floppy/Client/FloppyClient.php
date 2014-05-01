@@ -38,6 +38,6 @@ class FloppyClient
             throw new BadResponseException('expecting json response with attributes property, actual response: '.$response);
         }
 
-        return new FileId(isset($res['attributes']['id']) ? $res['attributes']['id'] : null, (array) $res['attributes']);
+        return new FileId(isset($res['attributes']['id']) ? $res['attributes']['id'] : null, array(), null, (array) $res['attributes']);
     }
 }

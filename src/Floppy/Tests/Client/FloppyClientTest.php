@@ -33,8 +33,8 @@ class FloppyClientTest extends \PHPUnit_Framework_TestCase
         //given
 
         $fileSource = $this->createFileSource();
-        $expectedAttributes = array('some' => 'value', 'id' => 'someid');
-        $response = json_encode(array('code' => 200, 'attributes' => $expectedAttributes));
+        $expectedFileInfo = array('some' => 'value', 'id' => 'someid');
+        $response = json_encode(array('code' => 200, 'attributes' => $expectedFileInfo));
         $this->expectsUpload($fileSource, $response, $credentials ? $this->generatedCredentials : array());
 
         //when
@@ -44,7 +44,7 @@ class FloppyClientTest extends \PHPUnit_Framework_TestCase
         //then
 
         $this->verifyMockObjects();
-        $this->assertEquals(new FileId($expectedAttributes['id'], $expectedAttributes), $fileId);
+        $this->assertEquals(new FileId($expectedFileInfo['id'], array(), null, $expectedFileInfo), $fileId);
     }
 
     public function credentialsProvider()
