@@ -11,7 +11,9 @@ use Floppy\Common\ChecksumCheckerImpl;
 use Floppy\Common\FileHandler\FilePathGenerator;
 use Floppy\Common\FileHandler\ImagePathGenerator;
 use Floppy\Common\Storage\FilepathChoosingStrategyImpl;
+use Floppy\Common\Storage\PrefixedFilepathChoosingStrategy;
 
+//TODO: obsługa prefixu
 class Factory
 {
     private $options;
@@ -56,8 +58,9 @@ class Factory
         $this->sharedDefinitions($container);
 
         $container['filepathChoosingStrategy'] = function ($container) {
-            return new FilepathChoosingStrategyImpl();
+            return new PrefixedFilepathChoosingStrategy(new FilepathChoosingStrategyImpl(), $container['filepathChoosingStrategy.prefix']);
         };
+        $container['filepathChoosingStrategy.prefix'] = '';
         $container['path'] = '';
         $container['protocol'] = 'http';
 

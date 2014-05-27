@@ -11,7 +11,7 @@
             "source": {
                 "type": "git",
                 "url": "git@codebasehq.com:advisio/zineinc/storage-common.git",
-                "reference": "1da5c65d45c048ed2a27a1803cdadb71d4b9d9ee"
+                "reference": "86e058f03b0c144292434449c9257290f8aee322"
             },
             "require": {
                 "jbroadway/urlify": ">=1.0.0,<1.1.0"
@@ -31,7 +31,7 @@
                     "email": "piotr.sliwa@zineinc.com"
                 }
             ],
-            "time": "2014-05-01 19:13:03"
+            "time": "2014-05-27 21:09:09"
         },
         {
             "name": "jbroadway/urlify",
