@@ -32,7 +32,7 @@ class BuzzFileSourceUploader implements FileSourceUploader
 
         $formUpload = new FormUpload();
         $formUpload->setName($this->fileKey);
-        $formUpload->setFilename(basename($fileSource->filepath()));
+        $formUpload->setFilename($this->getFilename($fileSource));
         $formUpload->setContent($fileSource->content());
 
         $request->addFields($extraFields + array(
@@ -62,5 +62,18 @@ class BuzzFileSourceUploader implements FileSourceUploader
         {
             throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
+    }
+
+    private function getFilename(FileSource $fileSource)
+    {
+        $filename = basename($fileSource->filepath());
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+        $preferredExtension = $fileSource->fileType()->prefferedExtension();
+
+        //make sure filename has valid extension. When FileSource was created from UploadedFile, filepath might be a hash
+        //and extension would be meaningless
+        return $preferredExtension && $preferredExtension !== $extension
+            ? 'file.'.$preferredExtension
+            : $filename;
     }
 }
