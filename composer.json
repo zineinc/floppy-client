@@ -8,9 +8,8 @@
         }
     ],
     "require": {
-        "jbroadway/urlify": ">=1.0.0,<1.1.0",
         "kriswallsmith/buzz": ">=v0.10",
-        "floppy/common": "*",
+        "floppy/common": "dev-master",
         "pimple/pimple": "2.0.*"
     },
     "autoload": {

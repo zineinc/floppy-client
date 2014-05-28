@@ -1,9 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "3c4377175004db2940287672eb1a59b6",
+    "hash": "3867e95b8b8b2dc25a0038eb453a532f",
     "packages": [
         {
             "name": "floppy/common",
@@ -11,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "git@codebasehq.com:advisio/zineinc/storage-common.git",
-                "reference": "86e058f03b0c144292434449c9257290f8aee322"
+                "reference": "5e4e68a8c3414b49d150301d97320799e5220e08"
             },
             "require": {
                 "jbroadway/urlify": ">=1.0.0,<1.1.0"
@@ -31,7 +32,7 @@
                     "email": "piotr.sliwa@zineinc.com"
                 }
             ],
-            "time": "2014-05-27 21:09:09"
+            "time": "2014-05-28 21:05:33"
         },
         {
             "name": "jbroadway/urlify",
@@ -192,9 +193,9 @@
 
     ],
     "minimum-stability": "dev",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "floppy/common": 20
+    },
     "platform": [
 
     ],
