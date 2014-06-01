@@ -68,7 +68,7 @@ class BuzzFileSourceUploader implements FileSourceUploader
     {
         $filename = basename($fileSource->filepath());
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
-        $preferredExtension = $fileSource->fileType()->prefferedExtension();
+        $preferredExtension = $fileSource->fileType()->extension();
 
         //make sure filename has valid extension. When FileSource was created from UploadedFile, filepath might be a hash
         //and extension would be meaningless
