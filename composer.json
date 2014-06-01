@@ -10,7 +10,8 @@
     "require": {
         "kriswallsmith/buzz": ">=v0.10",
         "floppy/common": "dev-master",
-        "pimple/pimple": "2.0.*"
+        "pimple/pimple": "2.0.*",
+        "jbroadway/urlify": ">=1.0.0,<1.1.0"
     },
     "autoload": {
     	"psr-0": { "Floppy\\": "src/" }

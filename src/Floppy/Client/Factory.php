@@ -8,8 +8,7 @@ use Buzz\Client\Curl;
 use Floppy\Client\Security\IgnoreIdCredentialsGenerator;
 use Floppy\Client\Security\PolicyGenerator;
 use Floppy\Common\ChecksumCheckerImpl;
-use Floppy\Common\FileHandler\FilePathGenerator;
-use Floppy\Common\FileHandler\ImagePathGenerator;
+use Floppy\Common\FileHandler\Base64PathGenerator;
 use Floppy\Common\Storage\FilepathChoosingStrategyImpl;
 
 class Factory
@@ -38,7 +37,7 @@ class Factory
         };
 
         $container['urlGenerator.image'] = function($container){
-            return new ImagePathGenerator($container['checksumChecker'], $container['filepathChoosingStrategy']);
+            return new Base64PathGenerator($container['checksumChecker'], $container['filepathChoosingStrategy']);
         };
 
         $container['urlGenerator.fileTypeGuesser'] = function($container){
@@ -62,7 +61,12 @@ class Factory
         $container['protocol'] = 'http';
 
         $container['urlGenerator.file'] = function($container){
-            return new FilePathGenerator($container['checksumChecker'], $container['filepathChoosingStrategy']);
+            return new Base64PathGenerator($container['checksumChecker'], $container['filepathChoosingStrategy'], array(
+                'name' => $container['urlGenerator.file.filter.name']
+            ));
+        };
+        $container['urlGenerator.file.filter.name'] = function($container){
+            return new UrlifyFilter();
         };
         $container['urlGenerator.hostResolver'] = function(){
             return new EmptyHostResolver();
