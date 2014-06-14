@@ -5,6 +5,7 @@ namespace Floppy\Client;
 
 
 use Buzz\Client\Curl;
+use Floppy\Client\Security\DefaultCredentialsGenerator;
 use Floppy\Client\Security\IgnoreIdCredentialsGenerator;
 use Floppy\Client\Security\PolicyGenerator;
 use Floppy\Common\ChecksumCheckerImpl;
@@ -26,18 +27,29 @@ class Factory
 
         $container['urlGenerator'] = function($container){
             return new UrlGeneratorImpl(array(
-                'image' => $container['urlGenerator.image'],
-                'file' => $container['urlGenerator.file'],
-            ), new Url($container['host'], $container['path'], $container['protocol']), $container['urlGenerator.hostResolver'], $container['credentialsGenerator'],
-            $container['urlGenerator.fileTypeGuesser']);
+                    'image' => $container['urlGenerator.image'],
+                    'file' => $container['urlGenerator.file'],
+                ), new Url($container['host'], $container['path'], $container['protocol']),
+                $container['urlGenerator.hostResolver'],
+                $container['credentialsGenerator'],
+                $container['urlGenerator.fileTypeGuesser']
+            );
         };
 
         $container['credentialsGenerator'] = function($container){
-            return new IgnoreIdCredentialsGenerator(new PolicyGenerator($container['checksumChecker']));
+            return new DefaultCredentialsGenerator(
+                new IgnoreIdCredentialsGenerator(
+                    new PolicyGenerator($container['checksumChecker'])
+                ),
+                $container['credentialsGenerator.defaultCredentials']
+            );
         };
 
         $container['urlGenerator.image'] = function($container){
-            return new Base64PathGenerator($container['checksumChecker'], $container['filepathChoosingStrategy']);
+            return new Base64PathGenerator(
+                $container['checksumChecker'],
+                $container['filepathChoosingStrategy']
+            );
         };
 
         $container['urlGenerator.fileTypeGuesser'] = function($container){
@@ -85,10 +97,17 @@ class Factory
             return new FloppyClient($container['floppy.uploader'], $container['credentialsGenerator']);
         };
         $container['floppy.uploader'] = function($container){
-            return new BuzzFileSourceUploader($container['floppy.uploader.buzz'], new Url($container['host'], $container['path'].'/upload', $container['protocol']), $container['floppy.uploader.fileKey']);
+            return new BuzzFileSourceUploader(
+                $container['floppy.uploader.buzz'],
+                new Url($container['host'], $container['path'].'/upload', $container['protocol']),
+                $container['floppy.uploader.fileKey']
+            );
         };
         $container['credentialsGenerator'] = function($container){
-            return new PolicyGenerator($container['checksumChecker']);
+            return new DefaultCredentialsGenerator(
+                new PolicyGenerator($container['checksumChecker']),
+                $container['credentialsGenerator.defaultCredentials']
+            );
         };
 
         $this->sharedDefinitions($container);
@@ -120,6 +139,7 @@ class Factory
             return new ChecksumCheckerImpl($container['secretKey'], $container['checksumChecker.length']);
         };
         $container['checksumChecker.length'] = -1;
+        $container['credentialsGenerator.defaultCredentials'] = array();
         return $container;
     }
 } 
