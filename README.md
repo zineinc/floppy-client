@@ -1,13 +1,16 @@
 FloppyClient
 ============
 
-FloppyClient is a client for FloppyServer library. Before using this library you should install you instance of
-FloppyServer. How to use FloppyServer you can find in documentation.
+FloppyClient is a client for [FloppyServer][1] library. Before using this library you should install you instance of
+[FloppyServer][1]. How to use FloppyServer you can find in [documentation][1].
 
 FloppyClient provides two simple integration points:
 
 - url generation for files stored on FloppyServer
 - client for file upload on FloppyServer
+
+FloppyClient is a pure client for FloppyServer, if you want to use Floppy in Symfony2 app you should be interested in
+[FloppyBundle][2].
 
 Features
 ========
@@ -71,11 +74,12 @@ on its strength. 16-32 length hash should be ok.
 * protocol - FloppyServer protocol (http or https) - default value: http
 * path - path to FloppyServer instance, default value: empty string
 
+<a name="security"></a>
 Security credentials generator
 ------------------------------
 
 You can define security rules to upload or download file from Floppy. Class that is responsible to add credentials to
-upload or download request is Floppy/Client/Security/CredentialsGenerator. You can pass credentials to UrlGenerator::generate
+upload or download request is Floppy\Client\Security\CredentialsGenerator. You can pass credentials to UrlGenerator::generate
 or FloppyClient::upload methods.
 
 ```php
@@ -86,11 +90,12 @@ or FloppyClient::upload methods.
 ```
 
 Default CredentialsGenerator implementation is PolicyGenerator, that cooporates with 
-Floppy/Server/RequestHandler/Security/PolicyRule from FloppyServer library. Supported credential attributes:
+Floppy\Server\RequestHandler\Security\PolicyRule from FloppyServer library. Supported credential attributes:
 
 * expiration - timestamp that defines date after that given request will expire
 * file_types - array of allowed types of files (names of file handlers, not mime type!) that can be uploaded by the request,
 it works only with upload request (FloppyClient::upload method)
+* access - public or private (public by default) - uploaded/retrieved file should be to/from public/private storage
 
 You can change implementation of CredentialsGenerator by passing your own implementation to Factory `credentialsGenerator` attribute.
 If you want to change credentials generator you should remember to change `action.download.securityRule` and `action.upload.securityRule`
@@ -113,7 +118,7 @@ in your instance of FloppyServer too.
 File handlers (file types)
 -------------
 
-There are two file handlers by default: image and file (other files). File handler on client side are important only for
+There are two file handlers by default: **image** and **file** (other files). File handler on client side are important only for
 url generator - generator should know for what file type generate url. Url generator recognize file types by extensions.
 By default file is image when has given extensions: png, jpg, jpeg or gif. Files with other extensions have "file" type.
 You can customize image extensions by passing `urlGenerator.image.extensions` attribute to `Factory`. You should remember
@@ -160,10 +165,10 @@ You can create UrlGenerator using factory:
 ```
 
 UrlGenerator has one method: `UrlGenerator::generate(FileId $fileId, $fileType = null, array $credentialAttributes = array())`.
-First argument is FileId to what url you want to generate. Second argument is file type (it is not mime type, it is name of FileHandler
+First argument is **FileId** to what url you want to generate. Second argument is **file type** (it is not mime type, it is name of FileHandler
 that should be used for this file). By default file type will be guessed depends on file extension, but you are able to
 enforce file type. Third argument is credential attributes. More info about credential attributes you can find in
-"Security credentials generator" section.
+[Security credentials generator](#security) section.
 
 As first argument you can pass FileId to original file or to proper file variant (for example thumbnail in given sizes).
 The thumbnail with size 60x60 can be generated in this way:
@@ -220,7 +225,7 @@ constructor.
 
 ```
 
-Second parameter of upload method is credential attributes - more about it is on "Security credentials generator" section.
+Second parameter of upload method is credential attributes - more about it is on [Security credentials generator](#security) section.
 
 Return type of upload method is Floppy\Common\FileId. On failure Floppy\Client\Exception\IOException is thrown. FileId
 returned by upload method contains extra info about uploaded file:
@@ -238,3 +243,6 @@ License
 =======
 
 This project is under **MIT** license.
+
+[1]: https://github.com/zineinc/floppy-server
+[2]: https://github.com/zineinc/floppy-bundle
