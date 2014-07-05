@@ -54,10 +54,7 @@ class UrlGeneratorImplTest extends \PHPUnit_Framework_TestCase
 
         $fileId = $this->createFileId();
         $path = 'a/b/c.jpg';
-        $this->pathGenerator->expects($this->atLeastOnce())
-            ->method('generate')
-            ->with($fileId)
-            ->will($this->returnValue($path));
+        $this->expectsPathGenerating($fileId, $path);
 
         //when
 
@@ -66,7 +63,7 @@ class UrlGeneratorImplTest extends \PHPUnit_Framework_TestCase
         //then
 
         $this->verifyMockObjects();
-        $expectedUrl = self::PROTOCOL.'://'.self::SUBDOMAIN.'.'.self::HOST.self::PATH.'/'.$path.($providedCredentials ? '?'.http_build_query($this->generatedCredentials) : '');
+        $expectedUrl = $this->hostAndPrefixPath() .'/'.$path.($providedCredentials ? '?'.http_build_query($this->generatedCredentials) : '');
         $this->assertEquals($expectedUrl, $url);
     }
 
@@ -86,6 +83,30 @@ class UrlGeneratorImplTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     */
+    public function pathGeneratorGeneratesPathWithQueryString_mergeCredentialsWithThatQueryString()
+    {
+        //given
+
+        $fileId = $this->createFileId();
+        $path = 'a/b/c.jpg?attrs=someValue';
+        $this->expectsPathGenerating($fileId, $path);
+        $credentials = array('some' => 'value');
+
+        //when
+
+        $url = $this->generator->generate($fileId, null, $credentials);
+
+        //then
+
+        $this->verifyMockObjects();
+
+        $expectedUrl = $this->hostAndPrefixPath().'/'.$path.'&'.http_build_query($this->generatedCredentials);
+        $this->assertEquals($expectedUrl, $url);
+    }
+
+    /**
+     * @test
      * @expectedException Floppy\Client\Exception\InvalidArgumentException
      */
     public function fileTypeDoesntExist_throwInvalidArgEx()
@@ -99,6 +120,22 @@ class UrlGeneratorImplTest extends \PHPUnit_Framework_TestCase
     private function createFileId()
     {
         return new FileId('some.jpg', array('a' => 'b'));
+    }
+
+    /**
+     * @return string
+     */
+    private function hostAndPrefixPath()
+    {
+        return self::PROTOCOL . '://' . self::SUBDOMAIN . '.' . self::HOST . self::PATH;
+    }
+
+    private function expectsPathGenerating(FileId $fileId, $path)
+    {
+        $this->pathGenerator->expects($this->atLeastOnce())
+            ->method('generate')
+            ->with($fileId)
+            ->will($this->returnValue($path));
     }
 }
 

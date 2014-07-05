@@ -44,7 +44,7 @@ class UrlGeneratorImpl implements UrlGenerator
         $credentialAttributes['id'] = $fileId->id();
         $generatedCredentials = $this->credentialsGenerator->generateCredentials($credentialAttributes);
         if($generatedCredentials) {
-            $qs = '?'.http_build_query($generatedCredentials);
+            $qs = (parse_url($url, PHP_URL_QUERY) ? '&' : '?').http_build_query($generatedCredentials);
             $url .= $qs;
         }
 

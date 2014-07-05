@@ -10,6 +10,8 @@ use Floppy\Client\Security\IgnoreIdCredentialsGenerator;
 use Floppy\Client\Security\PolicyGenerator;
 use Floppy\Common\ChecksumCheckerImpl;
 use Floppy\Common\FileHandler\Base64PathGenerator;
+use Floppy\Common\FileHandler\FilenameFileInfoAssembler;
+use Floppy\Common\FileHandler\QueryStringFileInfoAssembler;
 use Floppy\Common\Storage\FilepathChoosingStrategyImpl;
 
 class Factory
@@ -48,7 +50,7 @@ class Factory
         $container['urlGenerator.image'] = function($container){
             return new Base64PathGenerator(
                 $container['checksumChecker'],
-                $container['filepathChoosingStrategy']
+                new QueryStringFileInfoAssembler($container['filepathChoosingStrategy'])
             );
         };
 
@@ -73,9 +75,13 @@ class Factory
         $container['protocol'] = 'http';
 
         $container['urlGenerator.file'] = function($container){
-            return new Base64PathGenerator($container['checksumChecker'], $container['filepathChoosingStrategy'], array(
-                'name' => $container['urlGenerator.file.filter.name']
-            ));
+            return new Base64PathGenerator(
+                $container['checksumChecker'],
+                new FilenameFileInfoAssembler($container['filepathChoosingStrategy']),
+                array(
+                    'name' => $container['urlGenerator.file.filter.name']
+                )
+            );
         };
         $container['urlGenerator.file.filter.name'] = function($container){
             return new UrlifyFilter();

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3867e95b8b8b2dc25a0038eb453a532f",
+    "hash": "6976910fe4a7d6427e3d66d1c9ad5a45",
     "packages": [
         {
             "name": "floppy/common",
@@ -12,10 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "git@codebasehq.com:advisio/zineinc/storage-common.git",
-                "reference": "30c9e1d5a8b3e4d0c6687fe50ecfcfe62c0f846a"
-            },
-            "require": {
-                "jbroadway/urlify": ">=1.0.0,<1.1.0"
+                "reference": "fdffa41fd918af8bceeaaec5a8681496cbe3c188"
             },
             "type": "library",
             "autoload": {
@@ -32,7 +29,7 @@
                     "email": "piotr.sliwa@zineinc.com"
                 }
             ],
-            "time": "2014-06-01 20:26:26"
+            "time": "2014-07-05 13:23:22"
         },
         {
             "name": "jbroadway/urlify",
