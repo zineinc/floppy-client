@@ -56,7 +56,7 @@ Usage example
     //generate url to image thumbnail
     $url = $urlGenerator->generate(
         //create identifier to concrete thumbnail
-        $fileId->variant([ 'width': 200, 'height': 200, 'crop': true ]) //assume uploaded file is an image
+        $fileId->with([ 'thumbnail' => [ 'size' => [ 80, 80 ] ] ]) //assume uploaded file is an image
     );
 
     //generate url to original file
@@ -178,23 +178,63 @@ The thumbnail with size 60x60 can be generated in this way:
     use Floppy\Common\FileId;
 
     $fileId = new FileId('id-of-the-file.png');
-    $url = $urlGenerator->generate($fileId->variant(array(
-        'width' => 60,
-        'height' => 60,
+    $url = $urlGenerator->generate($fileId->with(array(
+        'thumbnail' => array(
+            'size' => array(60, 60),
+        ),
     ), /** explicitly file type */ 'image');
 
 ```
 
-Supported attributes for `image` file type:
+<a name="filters"></a>
+For images there are available bunch of filters as same as in [LiipImagineBundle library][3]:
 
-* width and height
-* crop - image should be cropped to exactly given size, default is false
-* cropBackgroundColor - color that image should be complemented to given size - it is important only when crop is false.
-Default value: null - it means transparent for png or white for jpg files
+- `auto_rotate`:
+    - (no options)
+
+- `background`:
+    - color (default #fff)
+    - size - array( width, height )
+
+- `crop`:
+    - start - array( x, y )
+    - size - array( width, height )
+    
+- `paste`:
+    - start - array( x, y )
+    - image - image name, image should be stored on FloppyServer instance by default in directory above storage.dir
+    
+- `relative_resize` **in this filter only one option at once can be passed!**:
+    - heighten: height (in pixels)
+    - widen: width (in pixels)
+    - increase: number of pixels
+    - scale: float number
+    
+- `resize`:
+    - size - array( width, height )
+    
+- `thumbnail`:
+    - mode - outbound or inset
+    - size - array( width, height )
+    - filter - ImageInterface::FILTER_* constants
+    
+- `upscale`:
+    - min - array( width, height )
+    
+- `watermark`:
+    - size - float or percent - relative size of watermark
+    - position - top/center(or empty string)/bottom + left/(empty string)/right, for example topleft, center, right etc.
+    - image - as same meaning as in `paste` filter
 
 Supported attributes for `file` file type:
 
 * name - name of downloaded file, it will be added to response Content-Disposition http header
+
+```php
+
+    $url = $urlGenerator->generate($fileId->with([ "name" => "Some name" ]));
+
+```
 
 Client
 ------
@@ -246,3 +286,4 @@ This project is under **MIT** license.
 
 [1]: https://github.com/zineinc/floppy-server
 [2]: https://github.com/zineinc/floppy-bundle
+[3]: https://github.com/liip/LiipImagineBundle/blob/master/Resources/doc/filters.md
