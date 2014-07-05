@@ -4,15 +4,21 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6976910fe4a7d6427e3d66d1c9ad5a45",
+    "hash": "ec7f0fc9a2ee9c8256f829a615687ef7",
     "packages": [
         {
             "name": "floppy/common",
-            "version": "dev-master",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
-                "url": "git@codebasehq.com:advisio/zineinc/storage-common.git",
-                "reference": "fdffa41fd918af8bceeaaec5a8681496cbe3c188"
+                "url": "https://github.com/zineinc/floppy-common.git",
+                "reference": "dedbab65451a9ef3a0aa955634260205db8cb2fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zineinc/floppy-common/zipball/dedbab65451a9ef3a0aa955634260205db8cb2fc",
+                "reference": "dedbab65451a9ef3a0aa955634260205db8cb2fc",
+                "shasum": ""
             },
             "type": "library",
             "autoload": {
@@ -20,6 +26,7 @@
                     "Floppy\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -29,20 +36,20 @@
                     "email": "piotr.sliwa@zineinc.com"
                 }
             ],
-            "time": "2014-07-05 13:23:22"
+            "time": "2014-07-05 14:45:47"
         },
         {
             "name": "jbroadway/urlify",
-            "version": "dev-master",
+            "version": "1.0.3-stable",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jbroadway/urlify.git",
-                "reference": "367c8350361a16b3e5d641838202062d41555eea"
+                "reference": "c9ada9d3873d11f72fa772aecd6896efad11ee67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jbroadway/urlify/zipball/367c8350361a16b3e5d641838202062d41555eea",
-                "reference": "367c8350361a16b3e5d641838202062d41555eea",
+                "url": "https://api.github.com/repos/jbroadway/urlify/zipball/c9ada9d3873d11f72fa772aecd6896efad11ee67",
+                "reference": "c9ada9d3873d11f72fa772aecd6896efad11ee67",
                 "shasum": ""
             },
             "require": {
@@ -84,20 +91,20 @@
                 "url",
                 "urlify"
             ],
-            "time": "2014-04-22 19:36:19"
+            "time": "2014-03-17 16:14:04"
         },
         {
             "name": "kriswallsmith/buzz",
-            "version": "dev-master",
+            "version": "v0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kriswallsmith/Buzz.git",
-                "reference": "a0f207ac4939978b604be9bec5d5b19baecd8165"
+                "reference": "759432d66387e3433d3b06cb6f773b97225b9b17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/Buzz/zipball/a0f207ac4939978b604be9bec5d5b19baecd8165",
-                "reference": "a0f207ac4939978b604be9bec5d5b19baecd8165",
+                "url": "https://api.github.com/repos/kriswallsmith/Buzz/zipball/759432d66387e3433d3b06cb6f773b97225b9b17",
+                "reference": "759432d66387e3433d3b06cb6f773b97225b9b17",
                 "shasum": ""
             },
             "require": {
@@ -132,7 +139,7 @@
                 "curl",
                 "http client"
             ],
-            "time": "2014-03-24 21:56:09"
+            "time": "2013-05-19 03:41:15"
         },
         {
             "name": "pimple/pimple",
@@ -189,10 +196,10 @@
     "aliases": [
 
     ],
-    "minimum-stability": "dev",
-    "stability-flags": {
-        "floppy/common": 20
-    },
+    "minimum-stability": "stable",
+    "stability-flags": [
+
+    ],
     "platform": [
 
     ],
