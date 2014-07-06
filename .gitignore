@@ -3,4 +3,5 @@
 .settings
 storage-client.iml
 .idea
+composer.lock
 /vendor/

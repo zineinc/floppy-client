@@ -1,5 +1,4 @@
-FloppyClient
-============
+# FloppyClient
 
 FloppyClient is a client for [FloppyServer][1] library. Before using this library you should install you instance of
 [FloppyServer][1]. How to use FloppyServer you can find in [documentation][1].
@@ -12,8 +11,22 @@ FloppyClient provides two simple integration points:
 FloppyClient is a pure client for FloppyServer, if you want to use Floppy in Symfony2 app you should be interested in
 [FloppyBundle][2].
 
-Features
-========
+# Documentation
+
+## ToC
+
+* [Features](#features)
+* [Usage example](#usage-example)
+* [Configuration](#config)
+    * [Security credentials generator](#security)
+    * [File handlers](#file-handlers)
+* [Detailed usage](#detailed-usage)
+    * [Url generator](#url-generator)
+    * [File uploading](#file-uploading)
+* [License](#license)
+
+<a name="features"></a>
+## Features
 
 FloppyClient and FloppyServer combo provides simple to use file storage server. Thanks to Floppy you won't care about
 write code to upload and storage files, code to generate (on runtime or pre-store) various thumbnails for photos, code
@@ -23,8 +36,8 @@ file variant can be retrieve and eventually know security rules and credentials 
 StorageServer's responsibility is to store files in efficient way (on filesystem by default, but it can be for example
 on cloud) and transparently preparing requested file variant - for example thumbnail in given sizes.
 
-Usage example
-=============
+<a name="usage-example"></a>
+## Usage example
 
 ```php
 
@@ -63,8 +76,8 @@ Usage example
     $url = $urlGenerator->generate($fileId);
 ```
 
-Configuration
-=============
+<a name="config"></a>
+## Configuration
 
 Fundamental FloppyClient configuration options:
 
@@ -75,8 +88,7 @@ on its strength. 16-32 length hash should be ok.
 * path - path to FloppyServer instance, default value: empty string
 
 <a name="security"></a>
-Security credentials generator
-------------------------------
+### Security credentials generator
 
 You can define security rules to upload or download file from Floppy. Class that is responsible to add credentials to
 upload or download request is Floppy\Client\Security\CredentialsGenerator. You can pass credentials to UrlGenerator::generate
@@ -115,8 +127,8 @@ in your instance of FloppyServer too.
 
 ```
 
-File handlers (file types)
--------------
+<a name="file-handlers"></a>
+### File handlers (file types)
 
 There are two file handlers by default: **image** and **file** (other files). File handler on client side are important only for
 url generator - generator should know for what file type generate url. Url generator recognize file types by extensions.
@@ -136,8 +148,8 @@ attributes in your instance of FloppyServer). Example FloppyClient configuration
     
 ```
 
-Detailed usage
-==============
+<a name="detailed-usage"></a>
+## Detailed usage
 
 Create Floppy factory object example:
 
@@ -153,8 +165,8 @@ Create Floppy factory object example:
 
 ```
 
-Url generator
--------------
+<a name="url-generator"></a>
+### Url generator
 
 You can create UrlGenerator using factory:
 
@@ -236,8 +248,8 @@ Supported attributes for `file` file type:
 
 ```
 
-Client
-------
+<a name="file-uploading"></a>
+### File uploading
 
 You can create FloppyClient using factory:
 
@@ -279,8 +291,8 @@ returned by upload method contains extra info about uploaded file:
 This extra info is accessible by FileId::info() method. FileId has id attribute accessible by method FileId::id() - this
 value you should store somewhere (database?) to be able to generate url to this file in the future.
 
-License
-=======
+<a name="license"></a>
+### License
 
 This project is under **MIT** license.
 
