@@ -1,5 +1,7 @@
 # FloppyClient
 
+[![Build Status](https://travis-ci.org/zineinc/floppy-client.svg?branch=master)](https://travis-ci.org/zineinc/floppy-client)
+
 FloppyClient is a client for [FloppyServer][1] library. Before using this library you should install you instance of
 [FloppyServer][1]. How to use FloppyServer you can find in [documentation][1].
 
